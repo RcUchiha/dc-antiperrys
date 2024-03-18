@@ -80,10 +80,10 @@ Contiene:
 
 Ten en cuenta que diferentes creadores de templates utilizan palabras clave ligeramente diferentes para algunos de estos marcadores:
 
-| Concepto                                      | En Stock Templater  | En KaraOK       | En The0x's Templater |
-| --------------------------------------------- | ------------------- | --------------- | -------------------- |
-| Marcador de línea de karaoke                  | `karaoke`           | `karaoke`       | `kara` or `karaoke`  |
-| Template que aplica tags una vez a cada línea | `template pre-line` | `template line` | `template line`      |
+| Concepto                                      | En el Templater común  | En KaraOK       | En The0x's Templater |
+| --------------------------------------------- | ---------------------- | --------------- | -------------------- |
+| Marcador de línea de karaoke                  | `karaoke`              | `karaoke`       | `kara` or `karaoke`  |
+| Template que aplica tags una vez a cada línea | `template pre-line`    | `template line` | `template line`      |
 
 Este es el principio de una lista más larga de diferencias entre los templaters. Las [tablas](#comparación) al final de esta guía muestran la lista completa de diferencias.
 
@@ -120,7 +120,7 @@ Sin embargo, esto no es realmente una restricción, ya que todos sus valores (y 
 
 ### Sílabas
 
-Hasta ahora, sólo hemos añadido algunos tags a cada línea k-timeada `kara`, sin usar nunca el k-timeo real.
+Hasta ahora, solo hemos añadido algunos tags a cada línea k-timeada `kara`, sin usar nunca el k-timeo real.
 Pero ahora que hemos introducido Lua eval y variables de línea, estamos listos para hacer efectos sensatos basados en sílabas.
 
 *Si reemplazamos el efecto de nuestra línea `template line` por `template syl` y aplicamos el template de nuevo, el creador de templates generará de repente múltiples líneas `fx` para cada línea `kara`; una línea `fx` por cada sílaba k-timeada de la línea `kara`.
