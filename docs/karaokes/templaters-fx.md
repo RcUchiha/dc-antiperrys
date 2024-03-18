@@ -97,7 +97,7 @@ Ahora, la parte interesante es que esto no sólo puede contener texto estático,
 
 Además, en este entorno Lua, el creador de templates te da acceso a toda la información necesaria sobre tu línea `kara`.
 Esto se almacena en la tabla `orgline`, que tiene el formato de la tabla estándar que describe una línea `.ass`, pero también contiene un montón de campos adicionales añadidos por karaskel o por el creador de templates de The0x.
-Los campos de karaskel se documentan aquí, mientras que los campos de The0x se documentan en la documentación del creador de templates.
+Los campos de karaskel se documentan [aquí](https://aegisub.org/docs/latest/automation/lua/modules/karaskel.lua/#dialogue-line-table), mientras que los campos de The0x se documentan en la documentación del creador de templates.
 
 *Por ejemplo, `orgline.duration` es la duración de la línea `kara`.
 Así que si pones `{\t(0,!orgline.duration/2!,\fscx150\fscy150)\t(!orgline.duration/2!,!orgline.duration!,\fscx100\fscy100)}` en tu `template line`, esto crearía un efecto que hace que cada línea se haga más grande y más pequeña a lo largo de su duración.
@@ -112,19 +112,20 @@ Así que la plantilla anterior también podría escribirse como `{\t(0,!$ldur/2!
 Nota que la última aparición de `$ldur` no va entre signos de exclamación, ya que su valor puede sustituirse directamente en el texto del comando.
 Sin embargo, las dos instancias anteriores todavía necesitan ocurrir dentro de un bloque Lua eval para realizar operaciones aritméticas con ellas después.*
 
-The inline variables for the stock templater are documented [here](https://aegisub.org/docs/latest/automation/karaoke_templater/inline_variables/).
-KaraOK adds a character index variable `$ci`.
-However, The0x's templater removes most of these inline variables.
-You can see which ones are still available [here](https://github.com/The0x539/Aegisub-Scripts/blob/4d00d789d4897a04687fa7f66d3dce29dae64b64/src/0x.KaraTemplater.moon#L750-L775).
-However, this is not really a restriction, as all of their values (and more) are accessible via `orgline` and friends.
+Las variables de línea para el creador de templates común están documentadas [aquí](https://aegisub.org/docs/latest/automation/karaoke_templater/inline_variables/).
+KaraOK añade una variable de índice de caracteres `$ci`.
+Sin embargo, el creador de templates de The0x elimina la mayoría de estas variables de línea.
+Puedes ver cuáles están todavía disponibles [aquí](https://github.com/The0x539/Aegisub-Scripts/blob/4d00d789d4897a04687fa7f66d3dce29dae64b64/src/0x.KaraTemplater.moon#L750-L775).
+Sin embargo, esto no es realmente una restricción, ya que todos sus valores (y más) son accesibles a través de `orgline` y amigos.
 
-### Syllables
-Up to now, we've just added some tags to every k-timed `kara` line, without ever using the actual k-timing.
-But now that we've introduced Lua eval and inline variables, we're ready to make sensible syllable-based effects.
+### Sílabas
 
-*If we replace the effect of our `template line` line with `template syl` and apply the template again, the templater will suddenly generate multiple `fx` lines for each `kara` line - one `fx` line for each k-timed syllable of the `kara` line.
-If you didn't remove the scaling effect we made before, they'll all be stacked on top of each other at the top of the screen.
-If you did remove it, they'll be moved successively further down until they cover the whole screen.*
+Hasta ahora, sólo hemos añadido algunos tags a cada línea k-timeada `kara`, sin usar nunca el k-timeo real.
+Pero ahora que hemos introducido Lua eval y variables de línea, estamos listos para hacer efectos sensatos basados en sílabas.
+
+*Si reemplazamos el efecto de nuestra línea `template line` por `template syl` y aplicamos el template de nuevo, el creador de templates generará de repente múltiples líneas `fx` para cada línea `kara`; una línea `fx` por cada sílaba k-timeada de la línea `kara`.
+Si no eliminaste el efecto de escalado que hicimos antes, todas estarán apiladas unas encima de otras en la parte superior de la pantalla.
+Si lo eliminaste, se moverán sucesivamente hacia abajo hasta cubrir toda la pantalla.*
 
 This is because, by default, the generated syllable `fx` lines don't have any formatting whatsoever, so naturally they'll just follow the alignment dictated by their style.
 To position them correctly, we need to use `\an` and `\pos` tags together with some of the variables the templater gives us.
