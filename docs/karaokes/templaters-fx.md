@@ -87,13 +87,13 @@ Ten en cuenta que diferentes creadores de templates utilizan palabras clave lige
 
 Este es el principio de una lista más larga de diferencias entre los templaters. Las [tablas](#comparación) al final de esta guía muestran la lista completa de diferencias.
 
-*A continuación, intenta escribir `{fad(150,150)}` en el texto de la línea `template line`, y aplica el template.
+*A continuación, intenta escribir `{\fad(150,150)}` en el texto de la línea `template line`, y aplica el template.
 Esto dará a cada línea generada `fx` estos tags de desvanecimiento. Así que ya hemos creado una versión peor de HYDRA usando templates de karaoke.*
 
 Lo que ocurre aquí es que antes de convertir una línea `kara` en una línea `fx` usando una `template line`, el creador de templates añadirá lo que la línea `template line` contenga delante del texto (eliminado) de la línea `kara`.
 Ahora, la parte interesante es que esto no sólo puede contener texto estático, sino también expresiones Lua. Éstas van envueltas en signos de exclamación.
 
-*For example, if you change the template line line's text to `{\fad(!2*50!, 150)}`, you'll get a bunch of lines with `\fad(100,150)` tags, because what was in the exclamation marks was evaluated to 100 using Lua.*
+*Por ejemplo, si cambias el texto de la línea de la template por `{\fad(!2*50!, 150)}`, obtendrás un montón de líneas con tags `\fad(100,150)`, porque lo que había en los signos de exclamación se evaluó a 100 usando Lua.*
 
 Furthermore, in this Lua environment, the templater gives you access to all necessary information about your `kara` line.
 This is stored in the `orgline` table, which has the format of the standard table describing an `.ass` line, but also contains lots of additional fields added by karaskel or by The0x's templater.
