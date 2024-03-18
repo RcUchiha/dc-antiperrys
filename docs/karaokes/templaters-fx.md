@@ -20,7 +20,6 @@ Si estás buscando guías reales sobre KFX, aquí tienes algunos enlaces:
 Además, tengo [aquí](https://github.com/TypesettingTools/arch1t3cht-Aegisub-Scripts/blob/main/doc/misc_kara.md) una colección de templates diversas que hice para la edición de carteles u otros fines que no son estilización de canciones.
 
 ## Creadores de Templates Existentes
-
 Al momento de escribir esto (2022), hay tres principales creadores de templates de karaoke:
 
 1. El creador de templates estándar que viene con Aegisub, documentado [aquí](https://aegisub.org/docs/latest/automation/karaoke_templater/) como parte de la documentación de Aegisub. La documentación es muy detallada, pero bastante técnica.
