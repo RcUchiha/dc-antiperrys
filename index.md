@@ -1,7 +1,11 @@
 ---
-title: Inicio
+title: Introducción
 layout: home
 ---
+
+Esta pretende ser una página de guías al español sobre las labores que atiende un fansuber en su totalidad. Dichas guías podrán o no contener información recavada de distintas fuentes, y ser ordenada y adaptada de tal manera que sea fácil de comprender.
+
+El objetivo es mantener toda documentación sobre X o Y herramienta en un solo lugar y hacer que el conocimiento sea accesible para todos.
 
 This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
 
