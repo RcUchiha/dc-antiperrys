@@ -80,7 +80,7 @@ Contiene:
 
 Ten en cuenta que diferentes creadores de templates utilizan palabras clave ligeramente diferentes para algunos de estos marcadores:
 | Concepto                                      | En Stock Templater  	| En KaraOK       	| En The0x's Templater 	|
-|-----------------------------------------------|-----------------------|-------------------|-----------------------|
+|:----------------------------------------------|:----------------------|:------------------|:----------------------|
 | Marcador de línea de karaoke                  | `karaoke`           	| `karaoke`       	| `kara` or `karaoke`  	|
 | Template que aplica tags una vez a cada línea | `template pre-line` 	| `template line` 	| `template line`      	|
 
