@@ -19,6 +19,8 @@ Si estás buscando guías reales sobre KFX, aquí tienes algunos enlaces:
 
 Además, tengo [aquí](https://github.com/TypesettingTools/arch1t3cht-Aegisub-Scripts/blob/main/doc/misc_kara.md) una colección de templates diversas que hice para la edición de carteles u otros fines que no son estilización de canciones.
 
+---
+
 ## Creadores de Templates Existentes
 
 Al momento de escribir esto (2022), hay tres principales creadores de templates de karaoke:
@@ -36,3 +38,33 @@ Existen otras herramientas destacadas para hacer KFX. No se explican aquí porqu
 - [KaraEffector](https://github.com/KaraEffect0r/Kara_Effector), una gran colección de plantillas existentes y formas de modificarlas.
 - [PyonFX](https://github.com/CoffeeStraw/PyonFX), una biblioteca de Python para generar subtítulos `.ass`, adaptada para KFX.
 - [aegsc](https://github.com/butterfansubs/aegsc), un compilador que produce scripts `.ass` (especialmente templates de karaoke) que permite escribir templates con un formato más conveniente.
+
+---
+
+## Empezando
+
+Esta guía utiliza el [Creador de Templates de The0x539](https://github.com/The0x539/Aegisub-Scripts/blob/trunk/src/0x.KaraTemplater.moon), el cual necesitarás instalar primero (también te recomiendo encarecidamente que asignes su función a un atajo de teclado. Yo uso Ctrl+Alt+S). La guía intercala explicaciones semitécnicas (formateadas normalmente) con ejemplos muy simples pero concretos (formateados en cursiva). También puedes seguir solo los ejemplos en cursiva si prefieres un enfoque puramente práctico.
+
+### Primeros Pasos
+
+Lo siguiente es el archivo de karaoke más simple que puedas imaginar:
+```
+[Script Info]
+ScriptType: v4.00+
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+YCbCr Matrix: TV.709
+PlayResX: 1920
+PlayResY: 1080
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Karaoke,Georgia,72,&H002A0A00,&H000019FF,&H00FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,2.5,0,8,30,30,25,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Comment: 0,0:00:00.00,0:00:00.00,Karaoke,,0,0,0,template line,
+Comment: 0,0:00:00.00,0:00:00.00,Karaoke,,0,0,0,,
+Comment: 0,0:00:20.88,0:00:26.80,Karaoke,,0,0,0,kara,{\k0}{\k39}A{\k22}to {\k54}i{\k44}chi{\k40}do {\k18}da{\k60}ke {\k12}ki{\k23}se{\k63}ki {\k39}wa {\k20}o{\k20}ko{\k39}ru {\k36}da{\k63}rou
+Comment: 0,0:00:26.80,0:00:32.96,Karaoke,,0,0,0,kara,{\k36}{\k20}Ya{\k30}sa{\k70}shi{\k38}i {\k39}ko{\k21}e {\k58}de {\k21}e{\k18}ga{\k57}ku {\k23}yu{\k37}gan{\k20}da {\k41}mi{\k35}ra{\k52}i
+```
