@@ -79,10 +79,10 @@ Contiene:
 *Al ejecutar la macro `The0x539's Templater`, el creador de templates verá la `template line`. Para cada línea marcada como `kara` con el mismo estilo que esta línea, generará una línea con el texto de la línea kara, sin las etiquetas de tiempo k. Estas líneas generadas serán marcadas como `fx` para que puedan ser eliminadas o reemplazadas más tarde.*
 
 Ten en cuenta que diferentes creadores de templates utilizan palabras clave ligeramente diferentes para algunos de estos marcadores:
-| Concepto                                      | En Stock Templater  	| En KaraOK       	| En The0x's Templater 	|
-|:----------------------------------------------|:----------------------|:------------------|:----------------------|
-| Marcador de línea de karaoke                  | `karaoke`           	| `karaoke`       	| `kara` or `karaoke`  	|
-| Template que aplica tags una vez a cada línea | `template pre-line` 	| `template line` 	| `template line`      	|
+| Concepto                                      | En Stock Templater  | En KaraOK       | En The0x's Templater |
+|:----------------------------------------------|:--------------------|:----------------|:---------------------|
+| Marcador de línea de karaoke                  | `karaoke`           | `karaoke`       | `kara` or `karaoke`  |
+| Template que aplica tags una vez a cada línea | `template pre-line` | `template line` | `template line`      |
 
 Este es el principio de una lista más larga de diferencias entre los templaters. Las [tablas](#comparación) al final de esta guía muestran la lista completa de diferencias.
 
