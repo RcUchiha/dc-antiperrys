@@ -95,22 +95,22 @@ Ahora, la parte interesante es que esto no sólo puede contener texto estático,
 
 *Por ejemplo, si cambias el texto de la línea de la template por `{\fad(!2*50!, 150)}`, obtendrás un montón de líneas con tags `\fad(100,150)`, porque lo que había en los signos de exclamación se evaluó a 100 usando Lua.*
 
-Furthermore, in this Lua environment, the templater gives you access to all necessary information about your `kara` line.
-This is stored in the `orgline` table, which has the format of the standard table describing an `.ass` line, but also contains lots of additional fields added by karaskel or by The0x's templater.
-The karaskel fields are documented [here](https://aegisub.org/docs/latest/automation/lua/modules/karaskel.lua/#dialogue-line-table) while The0x's fields are documented in the templater's documentation.
+Además, en este entorno Lua, el creador de templates te da acceso a toda la información necesaria sobre tu línea `kara`.
+Esto se almacena en la tabla `orgline`, que tiene el formato de la tabla estándar que describe una línea `.ass`, pero también contiene un montón de campos adicionales añadidos por karaskel o por el creador de templates de The0x.
+Los campos de karaskel se documentan aquí, mientras que los campos de The0x se documentan en la documentación del creador de templates.
 
-*For example, `orgline.duration` is the duration of the `kara` line.
-So if you put `{\t(0,!orgline.duration/2!,\fscx150\fscy150)\t(!orgline.duration/2!,!orgline.duration!,\fscx100\fscy100)}` in your `template line`, this would create an effect that makes each line get bigger and smaller over its duration.
-If the line is 1000ms long, this will turn into `{\t(0,500,\fscx150\fscy150)\t(500,1000,\fscx100\fscy100)}`.*
+*Por ejemplo, `orgline.duration` es la duración de la línea `kara`.
+Así que si pones `{\t(0,!orgline.duration/2!,\fscx150\fscy150)\t(!orgline.duration/2!,!orgline.duration!,\fscx100\fscy100)}` en tu `template line`, esto crearía un efecto que hace que cada línea se haga más grande y más pequeña a lo largo de su duración.
+Si la línea dura 1000 ms, se convertirá en `{\t(0,500,\fscx150\fscy150)\t(500,1000,\fscx100\fscy100)}`.*
 
-Lua eval is one of the two additional features available in templates.
-The other consists of inline variables prefixed by `$`, which will be directly substituted with their value.
-This happens before evaluating Lua expressions.
+Lua eval es una de las dos características adicionales disponibles en las templates.
+La otra consiste en variables de línea prefijadas por `$`, que serán sustituidas directamente por su valor.
+Esto ocurre antes de evaluar las expresiones de Lua.
 
-*For example, the inline variable `$ldur` also evaluates to the line's duration.
-So the above template could also be written as `{\t(0,!$ldur/2!,\fscx150\fscy150)\t(!$ldur/2!,$ldur,\fscx100\fscy100)}`.
-Note that the last occurrence of `$ldur` is not wrapped in exclamation marks, as its value can be directly substituted into the command text.
-However, the previous two instances still need to happen inside of a Lua eval block to perform arithmetic operations with them afterwards.*
+*Por ejemplo, la variable de línea `$ldur` también se evalúa a la duración de la línea.
+Así que la plantilla anterior también podría escribirse como `{\t(0,!$ldur/2!,\fscx150\fscy150)\t(!$ldur/2!,$ldur,\fscx100\fscy100)}`. 
+Nota que la última aparición de `$ldur` no va entre signos de exclamación, ya que su valor puede sustituirse directamente en el texto del comando.
+Sin embargo, las dos instancias anteriores todavía necesitan ocurrir dentro de un bloque Lua eval para realizar operaciones aritméticas con ellas después.*
 
 The inline variables for the stock templater are documented [here](https://aegisub.org/docs/latest/automation/karaoke_templater/inline_variables/).
 KaraOK adds a character index variable `$ci`.
