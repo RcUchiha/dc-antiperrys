@@ -127,51 +127,51 @@ Pero ahora que hemos introducido Lua eval y variables de línea, estamos listos 
 Si no eliminaste el efecto de escalado que hicimos antes, todas estarán apiladas unas encima de otras en la parte superior de la pantalla.
 Si lo eliminaste, se moverán sucesivamente hacia abajo hasta cubrir toda la pantalla.*
 
-This is because, by default, the generated syllable `fx` lines don't have any formatting whatsoever, so naturally they'll just follow the alignment dictated by their style.
-To position them correctly, we need to use `\an` and `\pos` tags together with some of the variables the templater gives us.
-We've used `orgline` before, and `orgline.left` gives us the x position of the left edge of the `kara` line, when formatting it with whatever style it has.
-Similarly, `orgline.top` gives us the y coordinate of the top edge.
+Esto se debe a que, por defecto, las líneas de sílabas `fx` generadas no tienen ningún tipo de formato, por lo que naturalmente seguirán la alineación dictada por su estilo.
+Para posicionarlas correctamente, necesitamos usar los tags `\an` y `\pos` junto con algunas de las variables que nos da el creador de templates.
+Ya hemos usado antes `orgline`, y `orgline.left` nos da la posición X del borde izquierdo de la línea `kara`, al formatearla con el estilo que tenga.
+Del mismo modo, `orgline.top` nos da la coordenada Y del borde superior.
 
-To put each individual syllable where it needs to go, we can use the analogous `syl` table, which (obviously) contains similar information about the syllable.
-Most importantly, `syl.left` contains the x position of the syllable's left edge, *relative to the line it's in*.
+Para colocar cada sílaba donde debe ir, podemos utilizar la tabla análoga `syl`, que (obviamente) contiene información similar sobre la sílaba.
+Lo más importante es que `syl.left` contiene la posición X del borde izquierdo de la sílaba, *respecto a la línea en la que está*.
 
-*With this in mind, we can write the following into our `template syl`: `{\an7\pos(!orgline.left+syl.left!,!orgline.top!)}`.
-If we now reapply our template, all the syllables will be at the correct position.*
+*Con esto en mente, podemos escribir lo siguiente en nuestro `template syl`: `{\an7\pos(!orgline.left+syl.left!,!orgline.top!)}`.
+Si ahora volvemos a aplicar nuestro template, todas las sílabas estarán en la posición correcta.*
 
-*Now, while `\an7` was the easiest example, but it's rarely convenient for any actual effects.
-So let's instead use, `{\an5\pos(!orgline.left+syl.center!,!orgline.middle!)}` which uses the analogous variables for the x and y positions of the middle of the line or syllable.
-This doesn't change the positioning, but uses `\an5` instead, which is more useful in almost all cases.*
+*Ahora, mientras que `\an7` fue el ejemplo más fácil, pero rara vez es conveniente para cualquier efecto real.
+Así que vamos a utilizar en su lugar, `{\an5\pos(!orgline.left+syl.center!,!orgline.middle!)}` que utiliza las variables análogas para las posiciones X e Y de la mitad de la línea o sílaba.
+Esto no cambia el posicionamiento, pero utiliza `\an5` en su lugar, que es más útil en casi todos los casos.*
 
-On the stock templater or KaraOK you might also find inline variables like `$scenter` and `$lmiddle` used for these[^2].
-We don't need `syl` for the y position, since the syllable's y position isn't dependent on the line with normal formatting.
-In fact `syl.middle` doesn't even exist.
-[^2]: I am aware that `$smiddle` also exists, but I'm trying to highlight the `$s[var]` and `$l[var]` pattern.
+En el creador de templates común o KaraOK también puedes encontrar variables de línea como `$scenter` y `$lmiddle` usadas para esto[^2].
+No necesitamos `syl` para la posición Y, ya que la posición Y de la sílaba no depende de la línea con formato normal.
+De hecho, `syl.middle` ni siquiera existe.
+[^2]: Soy consciente de que `$smiddle` también existe, pero estoy intentando resaltar el patrón `$s[var]` y `$l[var]`.
 
-*With everything we know now, we can already make a simple template.
-The only remaining pieces we need are the variables `syl.duration`, `syl.start_time`, and `syl.end_time`, which are the syllable's duration and start and end times in milliseconds respectively, with the latter two again being relative to the current line's start time.
-With this, we can make a simple template*
+*Con todo lo que sabemos ahora, ya podemos hacer un simple template.
+Las únicas piezas que nos faltan son las variables `syl.duration`, `syl.start_time` y `syl.end_time`, que son la duración de la sílaba y los tiempos de inicio y fin en milisegundos respectivamente, siendo estos dos últimos relativos al tiempo de inicio de la línea actual.
+Con esto, podemos hacer un simple template...*
 ```
 {\an5\pos(!orgline.left+syl.center!,!orgline.middle!)
 \t(!syl.start_time!,!syl.start_time+syl.duration/2!,\fscx130\fscy130)
 \t(!syl.start_time+syl.duration/2!,!syl.end_time!,\fscx100\fscy100)}
 ```
-*that highlights each syllable by making it larger and smaller again.*
+*... que resalta cada sílaba haciéndola más grande y más pequeña de nuevo.*
 
-*Note: This is only an example styling, designed to be as simple as possible. It is not perfect styling, nor is it styling you should copy at all. Its biggest problem is that the scaling on syl highlights follows a simple triangle curve: It grows for half of the syllable's duration, and shrinks for the other half. This will make short syllables grow and shrink very quickly, while the more dragged out syllables grow and shrink very slowly, reaching their peak size far too late. For actual song styling, you should instead make the highlight follow something resembling an [ADSR Curve](https://en.wikipedia.org/wiki/Envelope_(music)#ADSR), i.e. leave the growing and shrinking times somewhat constant and instead sustain the highlight effect for some time for longer syllables.*
+*Nota: Esto es solo un ejemplo de estilo, diseñado para ser lo más simple posible. No es un estilo perfecto, ni es un estilo que debas copiar en absoluto. Su mayor problema es que el escalado de las sílabas resaltadas sigue una simple curva triangular: crece durante la mitad de la duración de la sílaba y se reduce durante la otra mitad. Esto hará que las sílabas cortas crezcan y se reduzcan muy rápidamente, mientras que las sílabas más largas crecen y se reducen muy lentamente, alcanzando su tamaño máximo demasiado tarde. Para el estilo real de la canción, debería hacer que el realce siguiera algo parecido a una [curva ADSR](https://en.wikipedia.org/wiki/Envelope_(music)#ADSR), es decir, dejar los tiempos de crecimiento y encogimiento algo constantes y mantener el efecto de realce durante algún tiempo para las sílabas más largas.*
 
-**I've now explained most of the basics of templating, and hopefully you should now be able to read the documentation of the various templaters or dissect existing templates ([these](misc_kara.md), for example) to dive deeper. Read on if you want primers on some of the more specific concepts.**
+**Ya expliqué la mayoría de los conceptos básicos de templates, y espero que ahora puedas leer la documentación de los distintos creadores de templates o diseccionar los templates existentes ([estos](misc_kara.md), por ejemplo) para profundizar. Sigue leyendo si quieres una introducción a algunos de los conceptos más específicos.**
 
-### Multiline effects and mixins
-Our `template syl` generates one `fx` line for each input syllable.
-If we want to make an effect that generates multiple lines for each syllable we can add more `template syl` line. (For more complex effects, we can also use loops.)
+### Efectos multilínea y mixins
+Nuestra `template syl` genera una línea `fx` por cada sílaba de entrada.
+Si queremos hacer un efecto que genere múltiples líneas para cada sílaba podemos añadir más líneas `template syl`. (Para efectos más complejos, también podemos usar bucles).
 
-*For example, let's add a blue-ish glow effect to our karaoke lines.
-Take the `template syl` line we've made before, and duplicate it.
-Increase the second one's layer by one, and add `\3c&HFFCCCC&\bord5\blur5` to the first one.
-If you now apply the template, there will be two `fx` lines generated for each syllable - one for each `template syl`.
-The `fx` lines will also have the same layers as their respective `template syl` lines.*
+*Por ejemplo, vamos a añadir un efecto de brillo azulado a nuestras líneas de karaoke.
+Toma la línea `template syl` que hicimos antes, y duplícala.
+Aumenta la capa de la segunda en uno, y añade `\3c&HFFCCCC&\bord5\blur5` a la primera.
+Si ahora aplicas el template, se generarán dos líneas `fx` para cada sílaba, una para cada `template syl`.
+Las líneas `fx` también tendrán las mismas capas que sus respectivas líneas `template syl`.*
 
-But if we're not careful (as happened in this example), this now duplicates a lot of our template code. If we want to change some element of the highlight effect, we'd need to change both `template syl` lines. This is where mixins are very helpful.
+Pero si no tenemos cuidado (como ocurrió en este ejemplo), esto duplica ahora gran parte del código de nuestro template. Si queremos cambiar algún elemento del efecto de resaltado, necesitaríamos cambiar ambas líneas `template syl`. Aquí es donde los mixins son muy útiles.
 
 Mixins are a way to apply additional tags (or any text, really) to some subset of the *generated* `fx` lines. For example, by default a `mixin syl` line will add its content to every syllable in every generated line, no matter if it's from a `template line` or a `template syl`. By using modifiers like `layer`, `t_actor`, or `if` and `unless`, we can restrict what lines a mixin applies to. This is very useful both for cleaning up templates and removing duplicate code, and for conditional formatting.
 
