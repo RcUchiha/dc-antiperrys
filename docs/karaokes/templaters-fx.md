@@ -173,9 +173,9 @@ Las líneas `fx` también tendrán las mismas capas que sus respectivas líneas 
 
 Pero si no tenemos cuidado (como ocurrió en este ejemplo), esto duplica ahora gran parte del código de nuestro template. Si queremos cambiar algún elemento del efecto de resaltado, necesitaríamos cambiar ambas líneas `template syl`. Aquí es donde los mixins son muy útiles.
 
-Mixins are a way to apply additional tags (or any text, really) to some subset of the *generated* `fx` lines. For example, by default a `mixin syl` line will add its content to every syllable in every generated line, no matter if it's from a `template line` or a `template syl`. By using modifiers like `layer`, `t_actor`, or `if` and `unless`, we can restrict what lines a mixin applies to. This is very useful both for cleaning up templates and removing duplicate code, and for conditional formatting.
+Los mixins son una forma de aplicar tags adicionales (o cualquier texto, en realidad) a algún subconjunto de las líneas `fx` *generadas*. Por ejemplo, por defecto una línea `mixin syl` añadirá su contenido a cada sílaba de cada línea generada, sin importar si es de una `template line` o de una `template syl`. Usando modificadores como `layer`, `t_actor`, o `if` y `unless`, podemos restringir a qué líneas se aplica un mixin. Esto es muy útil tanto para limpiar templates y eliminar código duplicado, como para el formateo condicional.
 
-*In our case, we can rewrite our template as follows:*
+*En nuestro caso, podemos reescribir nuestro template de la siguiente manera:*
 ```
 [layer 0] template syl: {\3c&HFFCCCC&\bord5\blur5}
 [layer 1] template syl:
@@ -183,7 +183,7 @@ Mixins are a way to apply additional tags (or any text, really) to some subset o
                          \t(!syl.start_time!,!syl.start_time+syl.duration/2!,\fscx130\fscy130)
                          \t(!syl.start_time+syl.duration/2!,!syl.end_time!,\fscx100\fscy100)}
 ```
-*In fact, by splitting up the `mixin` into multiple parts, we can separate the different parts of this template by their purpose, and make it easier to read:*
+*De hecho, al dividir el `mixin` en múltiples partes, podemos separar las diferentes partes de este template por su propósito, y hacerlo más fácil de leer:*
 ```
 [layer 0] template syl: {\3c&HFFCCCC&\bord5\blur5}
 [layer 1] template syl:
@@ -191,58 +191,58 @@ Mixins are a way to apply additional tags (or any text, really) to some subset o
              mixin syl: {\t(!syl.start_time!,!syl.start_time+syl.duration/2!,\fscx130\fscy130)
                          \t(!syl.start_time+syl.duration/2!,!syl.end_time!,\fscx100\fscy100)}
 ```
-Mixins (at least in this capacity) are a feature that's unique to The0x's templater. Read its documentation to find all of the possible modifiers for conditional execution.
+Los mixins (al menos en esta capacidad) son una característica exclusiva del creador de templates de The0x. Lea su documentación para encontrar todos los modificadores posibles para la ejecución condicional.
 
-### Code Lines
-Now that we have all the basic functionality, we can talk about code lines. These just allow you to write Lua code which is run either once, or once for every line, syllable, word, or character.
-Simple uses include defining constants or functions which compute values you need in your templates. They're pretty self-explanatory, and everything else important is explained in the documentation, so here's just a quick usage example to round off our example template:
+### Líneas de código
+Ahora que tenemos toda la funcionalidad básica, podemos hablar de líneas de código. Estas te permiten escribir código Lua que se ejecuta una vez, o una vez por cada línea, sílaba, palabra o carácter.
+Los usos simples incluyen la definición de constantes o funciones que calculan valores que necesitas en tus templates. Son bastante autoexplicativos, y todo lo demás importante se explica en la documentación, así que aquí solo hay un ejemplo de uso rápido para completar nuestra plantilla de ejemplo:
 
-*Right now, our template makes syllables grow larger over the first half of their duration, and grow smaller over the second half. If we want them to get larger faster, we can instead use something like `syl.start_time + 0.3 * syl.duration` in the `\t` tags instead. But now, we need to type the `0.3` twice. If we want to change the value later, we might forget one of the two and break the effect. So let's put this into a constant variable:*
+*En este momento, nuestro template hace que las sílabas se agranden en la primera mitad de su duración, y se achiquen en la segunda mitad. Si queremos que crezcan más rápido, podemos usar algo como `syl.start_time + 0.3 * syl.duration` en los tags `\t`. Pero ahora, tenemos que escribir el `0.3` dos veces. Si queremos cambiar el valor más tarde, podríamos olvidar uno de los dos y romper el efecto. Así que pongamos esto en una variable constante:*
 ```
-             code once: growtime = 0.3
+             code once: ticreci = 0.3
 [layer 0] template syl: {\3c&HFFCCCC&\bord5\blur5}
 [layer 1] template syl:
              mixin syl: {\an5\pos(!orgline.left+syl.center!,!orgline.middle!)}
-             mixin syl: {\t(!syl.start_time!,!syl.start_time+growtime*syl.duration!,\fscx130\fscy130)
-                         \t(!syl.start_time+growtime*syl.duration!,!syl.end_time!,\fscx100\fscy100)}
+             mixin syl: {\t(!syl.start_time!,!syl.start_time+ticreci*syl.duration!,\fscx130\fscy130)
+                         \t(!syl.start_time+ticreci*syl.duration!,!syl.end_time!,\fscx100\fscy100)}
 ```
-*While we're at it, let's also give some of the other constants names:*
+*Ya que estamos en ello, demos también nombres a algunas de las otras constantes:*
 ```
-             code once: growtime = 0.3; growscale = 130; glowcol = "&HFFCCCC";
-[layer 0] template syl: {\3c!glowcol!\bord5\blur5}
+             code once: ticreci = 0.3; escalacreci = 130; colorbrillo = "&HFFCCCC";
+[layer 0] template syl: {\3c!colorbrillo!\bord5\blur5}
 [layer 1] template syl:
              mixin syl: {\an5\pos(!orgline.left+syl.center!,!orgline.middle!)}
-             mixin syl: {\t(!syl.start_time!,!syl.start_time+growtime*syl.duration!,\fscx!growscale!\fscy!growscale!)
-                         \t(!syl.start_time+growtime*syl.duration!,!syl.end_time!,\fscx100\fscy100)}
+             mixin syl: {\t(!syl.start_time!,!syl.start_time+ticreci*syl.duration!,\fscx!escalacreci!\fscy!escalacreci!)
+                         \t(!syl.start_time+ticreci*syl.duration!,!syl.end_time!,\fscx100\fscy100)}
 ```
-*We could also have a separate `code once` line for each constant, that's just a matter of taste.*
+*También podríamos tener una línea `code once` separada para cada constante, eso es solo cuestión de gustos.*
 
-*To not need to type `!syl.start_time+growtime*syl.duration!` twice, we could also turn this into a variable. We can either do this with a `code syl`, or with the `set` function:*
+*Para no tener que teclear `!syl.start_time+ticreci*syl.duration!` dos veces, también podríamos convertir esto en una variable. Podemos hacerlo con un `code syl`, o con la función `set`:*
 ```
-             code once: growtime = 0.3; growscale = 130; glowcol = "&HFFCCCC";
-[layer 0] template syl: {\3c!glowcol!\bord5\blur5}
+             code once: ticreci = 0.3; escalacreci = 130; colorbrillo = "&HFFCCCC";
+[layer 0] template syl: {\3c!colorbrillo!\bord5\blur5}
 [layer 1] template syl:
-             code  syl: growt = syl.start_time+growtime*syl.duration
+             code  syl: ticre = syl.start_time+ticreci*syl.duration
              mixin syl: {\an5\pos(!orgline.left+syl.center!,!orgline.middle!)}
-             mixin syl: {\t(!syl.start_time!,!growt!,\fscx!growscale!\fscy!growscale!)
-                         \t(!growt!,!syl.end_time!,\fscx100\fscy100)}
+             mixin syl: {\t(!syl.start_time!,!ticre!,\fscx!escalacreci!\fscy!escalacreci!)
+                         \t(!ticre!,!syl.end_time!,\fscx100\fscy100)}
 ```
-*or*
+*o*
 ```
-             code once: growtime = 0.3; growscale = 130; glowcol = "&HFFCCCC";
-[layer 0] template syl: {\3c!glowcol!\bord5\blur5}
+             code once: ticreci = 0.3; escalacreci = 130; colorbrillo = "&HFFCCCC";
+[layer 0] template syl: {\3c!colorbrillo!\bord5\blur5}
 [layer 1] template syl:
              mixin syl: {\an5\pos(!orgline.left+syl.center!,!orgline.middle!)}
-             mixin syl: {!set("growt", syl.start_time+growtime*syl.duration)!
-                         \t(!syl.start_time!,!growt!,\fscx!growscale!\fscy!growscale!)
-                         \t(!growt!,!syl.end_time!,\fscx100\fscy100)}
+             mixin syl: {!set("ticre", syl.start_time+ticreci*syl.duration)!
+                         \t(!syl.start_time!,!ticre!,\fscx!escalacreci!\fscy!escalacreci!)
+                         \t(!ticre!,!syl.end_time!,\fscx100\fscy100)}
 ```
-*The latter is probably easier to read, but the former can be cleaner if you need this variable in multiple templates or mixins.*
+*La segunda es probablemente más fácil de leer, pero la primera puede ser más limpia si necesitas esta variable en múltiples templates o mixins.*
 
-### Functions
-The templaters provide various useful functions to further modify the current line.
-They're all documented in the respective templater's documentations.
-I just want to highlight the arguably most important one, called `retime`.
+### Funciones
+Los creadores de templates proporcionan varias funciones útiles para modificar aún más la línea actual.
+Todas están documentadas en la documentación del respectivo creador de templates.
+Solo quiero destacar la más importante, llamada `retime`.
 
 The `retime` function allows you to change the timing of the output line.
 There isn't any magic involved here - the `line` table always contains the fields of the line currently being currently generated and can be changed by anyone, so nobody is stopping you from writing `!(function() line.start_time = 1234 end)()!` to set the generated `fx` line's start time to `1:23`.
