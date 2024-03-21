@@ -302,36 +302,36 @@ A continuación se ofrece una lista más completa.
 
 ### Marcadores de línea
 Esta no es una lista completa. Consulta la documentación para ver todos los modificadores posibles.
-|Templater común                              |KaraOK                 |Templater de The0x            |
-|---------------------------------------------|-----------------------|------------------------------|
-|`karaoke`                                    |`karaoke`              |`kara` o `karaoke`            |
-|`fx`                                         |`fx`                   |`fx`                          |
-|`template pre-line`                          |`template line`        |`template line`               |
-|`template syl`                               |`template syl`         |`template syl`                |
-|`template char` o `template syl char`        |`template char`        |`template char`               |
-|no presente                                  |`template word`        |`template word`               |
-|`template line`                              |`template lsyl`        |`template line` + `mixin syl` |
-|`template furi`                              |`template furi`        |no presente                   |
-|no presente                                  |`template furichar`    |no presente                   |
-|no presente                                  |`template lchar`       |`template line` + `mixin char`|
-|no presente                                  |`template lword`       |`template line` + `mixin word`|
-|                                             |                       |                              |
-|`all` (para template y componentes de código)|`all`                  |`anystyle`                    |
-|no presente                                  |`all style <stylename>`|`style <stylename>`           |
-|                                             |                       |                              |
-|no presente                                  |no presente            |general `mixin line`          |
-|no presente                                  |no presente            |general `mixin syl`           |
-|no presente                                  |no presente            |general `mixin char`          |
-|no presente                                  |no presente            |general `mixin word`          |
-|                                             |                       |                              |
-|`code once`                                  |`code once`            |`code once`                   |
-|`code line`                                  |`code line`            |`code line`                   |
-|`code syl`                                   |`code syl`             |`code syl`                    |
-|no presente                                  |`code char`            |`code char`                   |
-|no presente                                  |`code word`            |`code word`                   |
-|`code furi`                                  |`code furi`            |no presente                   |
-|                                             |                       |                              |
-|`loop n`                                     |`loop n`               |`loop <loopname> n`           |
+| Templater común                               | KaraOK                  | Templater de The0x             |
+| --------------------------------------------- | ----------------------- | ------------------------------ |
+| `karaoke`                                     | `karaoke`               | `kara` o `karaoke`             |
+| `fx`                                          | `fx`                    | `fx`                           |
+| `template pre-line`                           | `template line`         | `template line`                |
+| `template syl`                                | `template syl`          | `template syl`                 |
+| `template char` o `template syl char`         | `template char`         | `template char`                |
+| no presente                                   | `template word`         | `template word`                |
+| `template line`                               | `template lsyl`         | `template line` + `mixin syl`  |
+| `template furi`                               | `template furi`         | no presente                    |
+| no presente                                   | `template furichar`     | no presente                    |
+| no presente                                   | `template lchar`        | `template line` + `mixin char` |
+| no presente                                   | `template lword`        | `template line` + `mixin word` |
+|                                               |                         |                                |
+| `all` (para template y componentes de código) | `all`                   | `anystyle`                     |
+| no presente                                   | `all style <stylename>` | `style <stylename>`            |
+|                                               |                         |                                |
+| no presente                                   | no presente             | general `mixin line`           |
+| no presente                                   | no presente             | general `mixin syl`            |
+| no presente                                   | no presente             | general `mixin char`           |
+| no presente                                   | no presente             | general `mixin word`           |
+|                                               |                         |                                |
+| `code once`                                   | `code once`             | `code once`                    |
+| `code line`                                   | `code line`             | `code line`                    |
+| `code syl`                                    | `code syl`              | `code syl`                     |
+| no presente                                   | `code char`             | `code char`                    |
+| no presente                                   | `code word`             | `code word`                    |
+| `code furi`                                   | `code furi`             | no presente                    |
+|                                               |                         |                                |
+| `loop n`                                      | `loop n`                | `loop <loopname> n`            |
 
 ### Tables in tenv
 - Throughout all templaters, `orgline`, `syl`, `char`, and `word` (where present and applicable) refer to *original* objects, while `line` refers to the `fx` line that will be generated.
