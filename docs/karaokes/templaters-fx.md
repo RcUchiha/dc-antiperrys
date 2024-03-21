@@ -302,6 +302,7 @@ A continuación se ofrece una lista más completa.
 
 ### Marcadores de línea
 Esta no es una lista completa. Consulta la documentación para ver todos los modificadores posibles.
+
 | Templater común                               | KaraOK                  | Templater de The0x             |
 | --------------------------------------------- | ----------------------- | ------------------------------ |
 | `karaoke`                                     | `karaoke`               | `kara` o `karaoke`             |
