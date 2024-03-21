@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Creadores de templates de karaoke
+title: Templaters de karaoke
 parent: Karaokes
 nav_order: 1
 ---
@@ -244,94 +244,94 @@ Los creadores de templates proporcionan varias funciones útiles para modificar 
 Todas están documentadas en la documentación del respectivo creador de templates.
 Solo quiero destacar la más importante, llamada `retime`.
 
-The `retime` function allows you to change the timing of the output line.
-There isn't any magic involved here - the `line` table always contains the fields of the line currently being currently generated and can be changed by anyone, so nobody is stopping you from writing `!(function() line.start_time = 1234 end)()!` to set the generated `fx` line's start time to `1:23`.
-The `retime` function just makes this much more convenient.
+La función `retime` te permite cambiar el tiempo de salida de la línea.
+No hay ninguna magia involucrada aquí; la tabla `line` siempre contiene los campos de la línea que se está generando actualmente y puede ser cambiada por cualquiera, así que nadie te impide escribir `!(function() line.start_time = 1234 end)()!` para establecer el tiempo de inicio de la línea `fx` generada a `1:23`.
+La función `retime` hace esto mucho más cómodo.
 
-*For example, even with `template syl`, the generated line uses the timing of the original `kara` line by default.
-If you instead want it to only appear when the syllable is being highlighted, you could add `!retime("syl")!` to your template to set its start and end time to the (absolute) start and end time of the syllable, respectively.
-If you want a lead-in and lead-out of 150 and 300 milliseconds respecively, you can write `!retime("syl", -150, 300)!`.
-If you instead want the syllable to disappear right when it should start getting highlighted, you can use `!retime("start2syl")!` instead.
-Check the documentation for all the possible modes.*
+*Por ejemplo, incluso con `template syl`, la línea generada utiliza por defecto el tiempo de la línea original `kara`.
+Si en cambio quieres que solo aparezca cuando la sílaba está siendo resaltada, puedes añadir `!retime("syl")!` a tu template para establecer su tiempo de inicio y fin al tiempo (absoluto) de inicio y fin de la sílaba, respectivamente.
+Si quieres un lead-in y lead-out de 150 y 300 milisegundos respectivamente, puedes escribir `!retime("syl", -150, 300)!`.
+Si por el contrario quieres que la sílaba desaparezca justo cuando debería empezar a resaltarse, puedes usar `!retime("start2syl")!` en su lugar.
+Consulta la documentación para conocer todos los modos posibles.*
 
-### Loops
-Finally, let's talk about loops.
-You can use loops in templates to create more complex effects, like generating multiple lines from each application of any one `template` line.
-You can also set the number of iterations during runtime.
-With The0x's templater, you can even use multiple nested loops.
-Using the `util.fbf` function, you can also easily set up a loop generating one output line for each frame.
-Mixins also support loops in The0x's templater.
+### Bucles
+Por último, hablemos de los bucles.
+Puedes usar bucles en templates para crear efectos más complejos, como generar múltiples líneas a partir de cada aplicación de cualquier línea de `template`.
+También puedes establecer el número de iteraciones durante el tiempo de ejecución.
+Con el creador de templates de The0x, puedes incluso utilizar múltiples bucles anidados.
+Usando la función `util.fbf`, también puedes configurar fácilmente un bucle que genere una línea de salida para cada fotograma.
+Los mixins también soportan bucles en el creador de templates de The0x.
 
-*For example, consider a line with the Effect `template line loop myloop 5` and the text*
+*Por ejemplo, considera una línea con el efecto `template line loop myloop 5` y el texto...*
 ```
 {!relayer($maxloop_myloop - $loop_myloop)!
 \an5\pos(!line.center - $loop_myloop - 1!,!line.middle + $loop_myloop - 1!)}
 ```
-*to make something like a solid shadow. Or you could have a simple `template line` with the text*
+*... para hacer algo como una sombra sólida. O podrías tener una simple `template line` con el texto...*
 ```
 {!util.fbf("line")!\an5
 \pos(!line.center + 100 * math.sin(2 * (line.start_time - orgline.start_time) / 1000)!, !line.middle!)}
 ```
-*to make the line smoothly move from side to side.*
+*... para hacer que la línea se mueva suavemente de lado a lado.*
 
-For frame-by-frame effects not using positioning, you might also be interested in [KaraOK's wave functions](https://github.com/logarrhythmic/karaOK#wave-table---pushing-the-limits-of-ass), which are also available in The0x's templater.
+Para los efectos frame a frame que no utilizan posicionamiento, también podrían interesarte las [funciones de onda de KaraOK](https://github.com/logarrhythmic/karaOK#wave-table---pushing-the-limits-of-ass), que también están disponibles en el creador de templates de The0x.
 
-### Other
-Some things I haven't mentioned here are:
-- Actors: Making effects behave differently (say, have different colors) depending on the Actor fields of the `kara` lines
-- Inline FX: Using markers in the `kara` lines to have different effects for individual syllables
-- The other very powerful conditional execution features of mixins, particularly `if` and `unless`
-- Gradients using the utility library of The0x's templater, as well as the color library
-- Furigana styling.
+### Otros
+Algunas cosas que no he mencionado aquí son:
+- Actores: Hacer que los efectos se comporten de manera diferente (digamos, que tengan diferentes colores) dependiendo de los campos Actor de las líneas `kara`.
+- Efectos en línea(Inline FX): Usar marcadores en las líneas `kara` para tener diferentes efectos para sílabas individuales.
+- Las otras poderosas características de ejecución condicional de los mixins, particularmente `if` y `unless`.
+- Gradientes usando la librería de utilidades del creador de templates de The0x, así como la librería color.
+- Estilo Furigana.
 
-Again, read the documentation to see what is possible there.
+De nuevo, lee la documentación para ver qué es posible allí.
 
-## Comparison
+## Comparación
 
-The main differences between the stock or KaraOK templaters and The0x's one are:
+Las principales diferencias entre los creadores de templates, ya sea el común o KaraOK y el de The0x son:
 
-- The `mixin` component and `word` class
-- Lack of the `multi`/`furi` classes/modifiers
-- Most dollar-variables need to instead be accessed through the `tenv` tables in inline lua
-- Named and nestable loops
-- Conditional execution (applicable to all components, not just `mixin`)
+- El componente `mixin` y la clase `word`.
+- Falta de las clases/modificadores `multi`/`furi`.
+- La mayoría de las variables de dólar necesitan ser accedidas a través de las tablas `tenv` en lua en línea (in inline lua).
+- Bucles nombrados y anidables.
+- Ejecución condicional (aplicable a todos los componentes, no solo a `mixin`).
 
-A more complete listing can be found below.
+A continuación se ofrece una lista más completa.
 
-**Note that all links to code sections in the various templaters are permalinks and might be outdated.**
+**Ten en cuenta que todos los enlaces a las secciones de código de los distintos creadores de templates son enlaces permanentes y pueden estar obsoletos.**
 
-### Line markers
-This is not a complete list. Check the documentation for all possible modifiers.
-| Stock Templater | KaraOK | The0x's Templater |
-| ------------------ | --------- | -------------------- |
-| `karaoke` | `karaoke` | `kara` or `karaoke` |
-| `fx` | `fx` | `fx`|
-| `template pre-line` | `template line` | `template line` |
-| `template syl` | `template syl` | `template syl` |
-| `template char` or `template syl char` | `template char` | `template char` |
-| not present | `template word` | `template word` |
-| `template line` | `template lsyl` | `template line` + `mixin syl` |
-| `template furi` | `template furi` | not present |
-| not present | `template furichar` | not present |
-| not present | `template lchar` | `template line` + `mixin char` |
-| not present | `template lword` | `template line` + `mixin word` |
-||||
-| `all` (for template and code components) | `all` | `anystyle` |
-| not present | `all style <stylename>` | `style <stylename>` |
-||||
-| not present | not present | general `mixin line` |
-| not present | not present | general `mixin syl` |
-| not present | not present | general `mixin char` |
-| not present | not present | general `mixin word` |
-||||
-| `code once` | `code once` | `code once` |
-| `code line` | `code line` | `code line` |
-| `code syl` | `code syl` | `code syl` |
-| not present | `code char` | `code char` |
-| not present | `code word` | `code word` |
-| `code furi` | `code furi` | not present |
-||||
-| `loop n` | `loop n` | `loop <loopname> n` |
+### Marcadores de línea
+Esta no es una lista completa. Consulta la documentación para ver todos los modificadores posibles.
+|Templater común                              |KaraOK                 |Templater de The0x            |
+|---------------------------------------------|-----------------------|------------------------------|
+|`karaoke`                                    |`karaoke`              |`kara` o `karaoke`            |
+|`fx`                                         |`fx`                   |`fx`                          |
+|`template pre-line`                          |`template line`        |`template line`               |
+|`template syl`                               |`template syl`         |`template syl`                |
+|`template char` o `template syl char`        |`template char`        |`template char`               |
+|no presente                                  |`template word`        |`template word`               |
+|`template line`                              |`template lsyl`        |`template line` + `mixin syl` |
+|`template furi`                              |`template furi`        |no presente                   |
+|no presente                                  |`template furichar`    |no presente                   |
+|no presente                                  |`template lchar`       |`template line` + `mixin char`|
+|no presente                                  |`template lword`       |`template line` + `mixin word`|
+|                                             |                       |                              |
+|`all` (para template y componentes de código)|`all`                  |`anystyle`                    |
+|no presente                                  |`all style <stylename>`|`style <stylename>`           |
+|                                             |                       |                              |
+|no presente                                  |no presente            |general `mixin line`          |
+|no presente                                  |no presente            |general `mixin syl`           |
+|no presente                                  |no presente            |general `mixin char`          |
+|no presente                                  |no presente            |general `mixin word`          |
+|                                             |                       |                              |
+|`code once`                                  |`code once`            |`code once`                   |
+|`code line`                                  |`code line`            |`code line`                   |
+|`code syl`                                   |`code syl`             |`code syl`                    |
+|no presente                                  |`code char`            |`code char`                   |
+|no presente                                  |`code word`            |`code word`                   |
+|`code furi`                                  |`code furi`            |no presente                   |
+|                                             |                       |                              |
+|`loop n`                                     |`loop n`               |`loop <loopname> n`           |
 
 ### Tables in tenv
 - Throughout all templaters, `orgline`, `syl`, `char`, and `word` (where present and applicable) refer to *original* objects, while `line` refers to the `fx` line that will be generated.
@@ -380,8 +380,8 @@ The templater also exposes the `subs`, `meta`, and `styles` objects, and its own
 | `$ltop` | `orgline.top` |
 | `$lmiddle` | `orgline.middle` |
 | `$lbottom` | `orgline.bottom` |
-| `$lx` | not present |
-| `$ly` | not present |
+| `$lx` | no presente |
+| `$ly` | no presente |
 | `$lwidth` | `orgline.width` |
 | `$lheight` | `orgline.height` |
 |||
@@ -391,10 +391,10 @@ The templater also exposes the `subs`, `meta`, and `styles` objects, and its own
 | `$sdur` | `$syldur` or `syl.duration` |
 | `$si` | `$si` or `(syl or char or orgline).si` |
 | `$ci` (KaraOK only) | `$ci` or `(char or syl or word or orgline).ci` |
-| not present | `$wi` or `(word or char or orgline).wi` |
-| not present | `$cxf` |
-| not present | `$sxf` |
-| not present | `$wxf` |
+| no presente | `$wi` or `(word or char or orgline).wi` |
+| no presente | `$cxf` |
+| no presente | `$sxf` |
+| no presente | `$wxf` |
 | `$skdur` | `$kdur` or `syl.kdur` or `syl.duration / 2` |
 | `$sleft` | `orgline.left + syl.left` |
 | `$scenter` | `orgline.left + syl.center` |
@@ -402,9 +402,9 @@ The templater also exposes the `subs`, `meta`, and `styles` objects, and its own
 | `$sbottom` | same as `$lbottom` |
 | `$smiddle` | same as `$lmiddle` |
 | `$stop` | same as `$ltop` |
-| `$sx` | not present |
-| `$sy` | not present |
+| `$sx` | no presente |
+| `$sy` | no presente |
 | `$swidth` | `syl.width` |
 | `$sheight` | `syl.height` |
 |||
-| Automatic variants| not present |
+| Automatic variants| no presente |
