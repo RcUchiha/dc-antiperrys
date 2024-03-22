@@ -334,78 +334,78 @@ Esta no es una lista completa. Consulta la documentación para ver todos los mod
 |                                               |                         |                                |
 | `loop n`                                      | `loop n`                | `loop <loopname> n`            |
 
-### Tables in tenv
-- Throughout all templaters, `orgline`, `syl`, `char`, and `word` (where present and applicable) refer to *original* objects, while `line` refers to the `fx` line that will be generated.
-- In the stock templater and KaraOK, `syl` is the current syllable for `template syl` lines, but it's the current *character* for `template char` lines. In fact, `template char` just translates to a `template syl` with a per-char flag internally.
-- The newer templaters add tables describing the current word or syllable for `template char` lines:
-    - In the stock templater, `word` and `char` don't exist.
-    - KaraOK adds tables `char`, `word`, and `syll` (the latter two are also accessible via `char.word` and `char.syll` in `template char`) referencing the current character, word, and syllable in `template char`.
-    - In The0x's templater, however, `syl`, `char` and `word` exist only for `template syl`, `template char`, and `template word` respectively, and refer to the respective object. The current syllable or word can be accessed with `char.syl` and `char.word` respectively.
+### Tablas en tenv
+- En todos los creadores de templates, `orgline`, `syl`, `char` y `word` (donde estén presentes y sean aplicables) se refieren a objetos *originales*, mientras que `line` se refiere a la línea `fx` que será generada.
+- En el creador de templates común y en KaraOK, `syl` es la sílaba actual para las líneas `template syl`, pero es el *carácter* actual para las líneas `template char`. De hecho, `template char` solo se traduce a `template syl` con una marca por carácter (per-char) internamente.
+- Los creadores de templates más recientes añaden tablas que describen la palabra o sílaba actual para las líneas `template char`:
+    - En el creador de templates común, `word` y `char` no existen.
+    - KaraOK añade las tablas `char`, `word` y `syll` (las dos últimas también son accesibles a través de `char.word` y `char.syll` en `template char`) referenciando el carácter, palabra y sílaba actuales en `template char`.
+    - En el creador de templates de The0x, sin embargo, `syl`, `char` y `word` solo existen para `template syl`, `template char` y `template word` respectivamente, y hacen referencia al objeto respectivo. Se puede acceder a la sílaba o palabra actual con `char.syl` y `char.word` respectivamente.
 
-### Other members of tenv
-Apart from the various line tables, utility functions, and loop variables, the templaters expose various different libraries and data in `tenv`, to be accessed directly from Lua eval fields:
+### Otros miembros de tenv
+Aparte de las diferentes tablas de líneas, funciones de utilidad y variables de bucle, los creadores de templates exponen diferentes librerías y datos en `tenv`, a los que se puede acceder directamente desde los campos Lua eval:
 
-- All three templaters provide the global environment `_G` of the calling templater to `tenv`, through which all other global variables can be accessed. For example, on the stock templater or KaraOK, Aegisub's `unicode` library can be accessed via `_G.unicode`.
-- The stock templater exposed only the `string` and `math` libraries, as seen [here](https://github.com/Aegisub/Aegisub/blob/6f546951b4f004da16ce19ba638bf3eedefb9f31/automation/autoload/kara-templater.lua#L294-L300). The final member `meta` is the map of script metadata fields in the subtitle file's `[Script Info]` section, as [collected by karaskel](https://aegisub.org/docs/latest/automation/lua/modules/karaskel.lua/#karaskelcollect_head).
-- In addition to this, KaraOK exposes the `math` libarary, as well as the subtitles object `subs` and various utility functions such as `ipairs` and `tostring`. The full list is [here](https://github.com/logarrhythmic/karaOK/blob/dc26cf017809b3d6ee2fabf01b454b09a6d1413a/autoload/ln.kara-templater-mod.lua#L336-L349).
-- The0x's templater exposes all of the libraries that KaraOK does, together with Aegisub's libraries `unicode` and `karaskel`. When available, it also exposes KaraOK's library as `ln` (which is automatically initialized), and The0x's color library as `colorlib`.
-The0x's templater does not expose all of the utility functions KaraOK does (`ipairs` being the most notable one), but exposes some other functions such as `require`. See [here](https://github.com/The0x539/Aegisub-Scripts/blob/3cd439b9d2bef2307a1c5725deb03206383b8ad3/src/0x.KaraTemplater.moon#L181) for a full list.
-The templater also exposes the `subs`, `meta`, and `styles` objects, and its own utility library [here](https://github.com/The0x539/Aegisub-Scripts/blob/3cd439b9d2bef2307a1c5725deb03206383b8ad3/src/0x.KaraTemplater.moon#L240).
+- Los tres creadores de templates proporcionan el entorno global `_G` del template(templater) que llama a `tenv`, a través del cual se puede acceder a todas las demás variables globales. Por ejemplo, en el creador de templates común o en KaraOK, se puede acceder a la librería `unicode` de Aegisub a través de `_G.unicode`.
+- El creador de templates común solo exponía las librerías `string` y `math`, como se ve [aquí](https://github.com/Aegisub/Aegisub/blob/6f546951b4f004da16ce19ba638bf3eedefb9f31/automation/autoload/kara-templater.lua#L294-L300). El miembro final `meta` es el mapa de campos de metadatos de script en la sección `[Script Info]` del archivo de subtítulos, como [recogido por karaskel](https://aegisub.org/docs/latest/automation/lua/modules/karaskel.lua/#karaskelcollect_head).
+- Además de esto, KaraOK expone la librería `math`, así como el objeto de subtítulos `subs` y varias funciones de utilidad como `ipairs` y `tostring`. La lista completa está [aquí](https://github.com/logarrhythmic/karaOK/blob/dc26cf017809b3d6ee2fabf01b454b09a6d1413a/autoload/ln.kara-templater-mod.lua#L336-L349).
+- El creador de templates de The0x expone todas las librerías que hace KaraOK, junto con las librerías de Aegisub `unicode` y `karaskel`. Cuando está disponible, también expone la librería de KaraOK como `ln` (que se inicializa automáticamente), y la librería color de The0x como `colorlib`.
+El creador de templates de The0x no expone todas las funciones de utilidad de KaraOK (`ipairs` es la más notable), pero expone algunas otras funciones como `require`. Ver [aquí](https://github.com/The0x539/Aegisub-Scripts/blob/3cd439b9d2bef2307a1c5725deb03206383b8ad3/src/0x.KaraTemplater.moon#L181) para una lista completa.
+El creador de templates también expone los objetos `subs`, `meta` y `styles`, y su propia librería de utilidades [aquí](https://github.com/The0x539/Aegisub-Scripts/blob/3cd439b9d2bef2307a1c5725deb03206383b8ad3/src/0x.KaraTemplater.moon#L240).
 
-### Inline variables
-- The following list is complete with respect to the inline variables in the stock templater and KaraOK. It's in the same order as the [documentation for inline variables in the stock templater](https://aegisub.org/docs/latest/automation/karaoke_templater/inline_variables/), so refer to that for the explanations of these variables.
-    - The0x's templater contains additional inline variables for working with loops, as well as the `$env_*` variables - see the source code for these.
-- The expressions in the following table are analogues of each other, but they might not be exactly equal. In particular, some values are rounded in the stock templater.
-- Many of the expressions listed below for The0x's templater also work for the stock templater and KaraOK.
+### Variables de línea
+- La siguiente lista es completa con respecto a las variables de línea en el creador de templates común y KaraOK. Está en el mismo orden que la [documentación para variables de línea en el creador de templates común](https://aegisub.org/docs/latest/automation/karaoke_templater/inline_variables/), así que refiérase a ella para las explicaciones de estas variables.
+    - El creador de templates de The0x contiene variables de línea adicionales para trabajar con bucles, así como las variables `$env_*` (ver el código fuente para estas).
+- Las expresiones de la siguiente tabla son análogas entre sí, pero pueden no ser exactamente iguales. En particular, algunos valores se redondean en el creador de templates común.
+- Muchas de las expresiones listadas a continuación para el creador de templates de The0x también funcionan para el creador de templates común y KaraOK.
 
 
-| Stock Templater & KaraOK | The0x's Templater |
-| ------------------ | -------------------- |
-| `$layer` | `orgline.layer` |
-| `$lstart` | `orgline.start_time` |
-| `$lend` | `orgline.end_time` |
-| `$ldur` | `$ldur` or `orgline.duration` |
-| `$lmid` | `orgline.start_time + 0.5 * orgline.duration` |
-| `$style` | `orgline.style` |
-| `$actor` | `orgline.actor` |
-| `$margin_l` | `orgline.eff_margin_l` |
-| `$margin_r` | `orgline.eff_margin_r` |
-| `$margin_t` | `orgline.eff_margin_t` |
-| `$margin_b` | `orgline.eff_margin_b` |
-| `$margin_v` | `orgline.eff_margin_v` |
-| `$syln` | `#orgline.syls` |
-| `$li` | `$li` or `orgline.li` |
-| `$lleft` | `orgline.left` |
-| `$lcenter` | `orgline.center` |
-| `$lright` | `orgline.right` |
-| `$ltop` | `orgline.top` |
-| `$lmiddle` | `orgline.middle` |
-| `$lbottom` | `orgline.bottom` |
-| `$lx` | no presente |
-| `$ly` | no presente |
-| `$lwidth` | `orgline.width` |
-| `$lheight` | `orgline.height` |
-|||
-| `$sstart` | `$sylstart` or `syl.start_time` |
-| `$send` | `$sylend` or `syl.end_time` |
-| `$smid` | `syl.start + 0.5 * syl.duration` |
-| `$sdur` | `$syldur` or `syl.duration` |
-| `$si` | `$si` or `(syl or char or orgline).si` |
-| `$ci` (KaraOK only) | `$ci` or `(char or syl or word or orgline).ci` |
-| no presente | `$wi` or `(word or char or orgline).wi` |
-| no presente | `$cxf` |
-| no presente | `$sxf` |
-| no presente | `$wxf` |
-| `$skdur` | `$kdur` or `syl.kdur` or `syl.duration / 2` |
-| `$sleft` | `orgline.left + syl.left` |
-| `$scenter` | `orgline.left + syl.center` |
-| `$sright` | `orgline.left + syl.right` |
-| `$sbottom` | same as `$lbottom` |
-| `$smiddle` | same as `$lmiddle` |
-| `$stop` | same as `$ltop` |
-| `$sx` | no presente |
-| `$sy` | no presente |
-| `$swidth` | `syl.width` |
-| `$sheight` | `syl.height` |
-|||
-| Automatic variants| no presente |
+|Templater común & KaraOK|Templater de The0x                            |
+|------------------------|----------------------------------------------|
+|`$layer`                |`orgline.layer`                               |
+|`$lstart`               |`orgline.start_time`                          |
+|`$lend`                 |`orgline.end_time`                            |
+|`$ldur`                 |`$ldur` o `orgline.duration`                  |
+|`$lmid`                 |`orgline.start_time + 0.5 * orgline.duration` |
+|`$style`                |`orgline.style`                               |
+|`$actor`                |`orgline.actor`                               |
+|`$margin_l`             |`orgline.eff_margin_l`                        |
+|`$margin_r`             |`orgline.eff_margin_r`                        |
+|`$margin_t`             |`orgline.eff_margin_t`                        |
+|`$margin_b`             |`orgline.eff_margin_b`                        |
+|`$margin_v`             |`orgline.eff_margin_v`                        |
+|`$syln`                 |`#orgline.syls`                               |
+|`$li`                   |`$li` o `orgline.li`                          |
+|`$lleft`                |`orgline.left`                                |
+|`$lcenter`              |`orgline.center`                              |
+|`$lright`               |`orgline.right`                               |
+|`$ltop`                 |`orgline.top`                                 |
+|`$lmiddle`              |`orgline.middle`                              |
+|`$lbottom`              |`orgline.bottom`                              |
+|`$lx`                   |no presente                                   |
+|`$ly`                   |no presente                                   |
+|`$lwidth`               |`orgline.width`                               |
+|`$lheight`              |`orgline.height`                              |
+|                        |                                              |
+|`$sstart`               |`$sylstart` o `syl.start_time`                |
+|`$send`                 |`$sylend` o `syl.end_time`                    |
+|`$smid`                 |`syl.start + 0.5 * syl.duration`              |
+|`$sdur`                 |`$syldur` o `syl.duration`                    |
+|`$si`                   |`$si` o `(syl o char u orgline).si`           |
+|`$ci` (solo KaraOK)     |`$ci` o `(char o syl o word u orgline).ci`    |
+|no presente             |`$wi` o `(word o char u orgline).wi`          |
+|no presente             |`$cxf`                                        |
+|no presente             |`$sxf`                                        |
+|no presente             |`$wxf`                                        |
+|`$skdur`                |`$kdur` o `syl.kdur` o `syl.duration / 2`     |
+|`$sleft`                |`orgline.left + syl.left`                     |
+|`$scenter`              |`orgline.left + syl.center`                   |
+|`$sright`               |`orgline.left + syl.right`                    |
+|`$sbottom`              |igual que `$lbottom`                          |
+|`$smiddle`              |igual que `$lmiddle`                          |
+|`$stop`                 |igual que `$ltop`                             |
+|`$sx`                   |no presente                                   |
+|`$sy`                   |no presente                                   |
+|`$swidth`               |`syl.width`                                   |
+|`$sheight`              |`syl.height`                                  |
+|                        |                                              |
+|Automatic variants      |no presente                                   |
