@@ -5,6 +5,8 @@ parent: Karaokes
 nav_order: 2
 ---
 
+# Creadore de templates de The0x539
+
 Hola, soy el creador de templates de The0x539. Realmente no tengo un nombre en sí, por lo que The0x539 escribió mis documentos en primera persona como una solución muy extraña. No aparece mucho, así que espero que no distraiga demasiado.
 
 Si ya tienes experiencia con un creador de templates, muchos aspectos de mi funcionamiento pueden resultarte bastante familiares. Sin embargo, hay algunas diferencias clave en el uso básico que pueden causar confusión al cambiarte.
