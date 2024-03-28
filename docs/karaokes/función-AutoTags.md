@@ -17,6 +17,7 @@ function AutoTags(Intervalo,Dato1,Dato2)            local RESULTADO=""     local
 
 Luego, se llama en el template.
 El uso original de la función AutoTags sería: 
+
 `AutoTags(duración del cambio, "tag1", "tag2")`
 ![image](https://github.com/RcUchiha/dc-antiperrys/assets/16442041/58955ca9-a8f1-4aa9-865f-83ea4131b053)
 
