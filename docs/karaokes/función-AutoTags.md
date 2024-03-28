@@ -13,4 +13,4 @@ La función AutoTags se utiliza para iterar entre dos (grupos de) tags de efecto
 function AutoTags(Intervalo,Dato1,Dato2)            local RESULTADO=""     local SUERTE = 0     local CONTADOR = 0     local ARREGLO = 0                           local count = math.ceil(line.duration/Intervalo)                         ARREGLO = {Dato1,Dato2}                            for i = 1, count do               CONTADOR = i                            if Dato1 and Dato2 then                     if  CONTADOR%2 ==0 then                                    SUERTE = ARREGLO[1]                                            else                                    SUERTE = ARREGLO[2]                            end                    end                     RESULTADO = RESULTADO .."\\t(" ..(i-1)*Intervalo.. "," ..i*Intervalo.. ",\\" ..SUERTE..")"..""                      end                 return RESULTADO                                     end
 ```
 
-![image](https://github.com/RcUchiha/dc-antiperrys/assets/16442041/0324ee35-1551-4b8d-9e53-c6b66d2d7454)
+![image](https://github.com/RcUchiha/dc-antiperrys/assets/16442041/0324ee35-1551-4b8d-9e53-c6b66d2d7454.png)
