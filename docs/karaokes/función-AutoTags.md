@@ -35,6 +35,7 @@ function AutoTags1(Intervalo,Dato1,Dato2,Pause)  local RESULTADO=""  local SUERT
 ```
 
 ![image](https://github.com/RcUchiha/dc-antiperrys/assets/16442041/a8bdf4d5-07da-45f7-add3-c15ee7aa38bd)
+
 Se utiliza para lograr un efecto de cambio de ida y vuelta con tiempo de pausa adicional. El cuarto parámetro adicional, "Pause", representa el tiempo de pausa en milisegundos (ms).
 AutoTags1(duración del cambio, "tag1", "tag2", tiempo de pausa)
 
