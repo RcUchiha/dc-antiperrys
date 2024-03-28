@@ -60,7 +60,7 @@ El efecto de decremento es similar a un temporizador de bomba, volviéndose cada
 `AutoTags3(tiempo inicial del cambio, tiempo final del cambio, "tag1", "tag2")`
 Si `tiempo inicial del cambio` > `tiempo final del cambio`, es un efecto de decremento. Si `tiempo final del cambio` > `tiempo inicial del cambio`, es un efecto de incremento.
 
-El archivo ASS está adjunto.
+El archivo ASS está adjunto:
 [AutoTags.zip](https://github.com/RcUchiha/dc-antiperrys/files/14785178/AutoTags.zip)
 
 
