@@ -1,9 +1,8 @@
 ---
-layout: default
 title: Automatización
-nav_order: 8.1
+layout: automatización
+parent: Karaokes
 has_children: true
-permalink: docs/automatizacion
 ---
 
 # Automatización
