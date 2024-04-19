@@ -1,6 +1,6 @@
 ---
 title: Automatización
-layout: automatización
+layout: default
 parent: Karaokes
 has_children: true
 ---
