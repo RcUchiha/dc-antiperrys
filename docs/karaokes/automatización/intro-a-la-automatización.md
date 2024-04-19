@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Templater de The0x
-parent: Karaokes
+title: Introducción a la automatización
+parent: Automatización
 nav_order: 1
 ---
 
-# Creador de templates de The0x539
+# Introducción a la automatización
